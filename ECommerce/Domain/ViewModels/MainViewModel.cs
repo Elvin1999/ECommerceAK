@@ -41,13 +41,24 @@ namespace ECommerce.Domain.ViewModels
             set { filterText = value; OnPropertyChanged(); }
         }
 
+        private string searchText;
+
+        public string SearchText
+        {
+            get { return searchText; }
+            set { searchText = value; OnPropertyChanged(); }
+        }
+
+
         public bool IsLower { get; set; } = false;
 
         public RelayCommand ToLowerCommand { get; set; }
         public RelayCommand SelectProductCommand { get; set; }
+        public RelayCommand SearchCommand { get; set; }
 
         public MainViewModel(IRepository<Product> productRepo)
         {
+            SearchText = String.Empty;
             FilterText = "Higher To Lower";
             _productRepo = productRepo;
             _productService = new ProductService();
@@ -55,6 +66,12 @@ namespace ECommerce.Domain.ViewModels
             SelectedProduct = new Product();
 
             AllProducts = _productRepo.GetAllData();
+
+
+            SearchCommand = new RelayCommand((o) =>
+            {
+                AllProducts = new ObservableCollection<Product>(_productRepo.GetAllData().Where(p=>p.Name.ToLower().Contains(SearchText.ToLower()) || p.Name==String.Empty));
+            });
 
             ToLowerCommand = new RelayCommand((o) =>
             {

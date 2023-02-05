@@ -33,6 +33,13 @@
                 </StackPanel>
             </Border>
 
+            <TextBox FontSize="26" FontWeight="ExtraBold" Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <ListView 
                 ItemsSource="{Binding AllProducts}" SelectedItem="{Binding SelectedProduct}"
                 Padding="10" Background="White" BorderBrush="Orange" BorderThickness="5,0,5,5">

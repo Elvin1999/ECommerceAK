@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECommerce.Domain.Views"
         mc:Ignorable="d"
-        Title="ProductWindow" Height="550" Width="900">
+        Title="ProductWindow" Height="600" Width="900">
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="450" Margin="5">
@@ -29,6 +29,12 @@
                     FontFamily="Comic Sans MS" Background="Transparent"
                     Foreground="Orange" FontSize="25" FontWeight="ExtraBlack"
                     Command="{Binding OrderCommand}">Order Now</Button>
+                <Button
+                    Margin="0,10,0,0"
+                    BorderBrush="Orange" BorderThickness="2"
+                    FontFamily="Comic Sans MS" Background="Transparent"
+                    Foreground="Orange" FontSize="25" FontWeight="ExtraBlack"
+                    Command="{Binding AddToCartCommand}">Add To Cart</Button>
             </StackPanel>
             <StackPanel>
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
