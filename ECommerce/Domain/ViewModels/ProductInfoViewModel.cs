@@ -1,4 +1,5 @@
-﻿using ECommerce.DataAccess.SqlServer;
+﻿using ECommerce.Commands;
+using ECommerce.DataAccess.SqlServer;
 using ECommerce.DataAccess.SqlServer.Repository;
 using ECommerce.Domain.Abstractions;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ECommerce.Domain.ViewModels
 {
@@ -14,7 +16,7 @@ namespace ECommerce.Domain.ViewModels
         private readonly IRepository<Product> _productRepo;
         private readonly IRepository<Order> _orderRepo;
         private readonly CustomerService _customerService;
-
+        public RelayCommand OrderCommand { get; set; }
         public ProductInfoViewModel()
         {
             _productRepo = new ProductRepository();
@@ -23,6 +25,38 @@ namespace ECommerce.Domain.ViewModels
 
             ProductInfo = new Product();
 
+            OrderCommand = new RelayCommand((o) =>
+            {
+                var customer = _customerService.GetCustomerByUsername(Username);
+                if (customer != null)
+                {
+                    if (ProductInfo.Quantity >= Amount)
+                    {
+                        ProductInfo.Quantity -= Amount;
+
+                        var order = new Order
+                        {
+                            Amount=Amount,
+                            CustomerId=customer.Id,
+                            ProductId=ProductInfo.Id,
+                            Date=DateTime.Now
+                        };
+
+                        _productRepo.UpdateData(ProductInfo);
+                        _orderRepo.AddData(order);
+
+                        MessageBox.Show("Order added successfully");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"We have only this {ProductInfo.Quantity} amount");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"{username} customer does not exist");
+                }
+            });
         }
 
         private Product productInfo;
@@ -32,6 +66,24 @@ namespace ECommerce.Domain.ViewModels
             get { return productInfo; }
             set { productInfo = value; OnPropertyChanged(); }
         }
+
+
+        private int amount;
+
+        public int Amount
+        {
+            get { return amount; }
+            set { amount = value; OnPropertyChanged(); }
+        }
+
+        private string username;
+
+        public string Username
+        {
+            get { return username; }
+            set { username = value; OnPropertyChanged(); }
+        }
+
 
     }
 }

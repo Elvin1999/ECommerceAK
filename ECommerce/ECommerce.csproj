@@ -85,7 +85,10 @@
     <Compile Include="Domain\Abstractions\IOrderRepository.cs" />
     <Compile Include="Domain\Abstractions\IProductRepository.cs" />
     <Compile Include="Domain\Abstractions\IRepository.cs" />
+    <Compile Include="Domain\Models\Cart.cs" />
+    <Compile Include="Domain\Models\CartLine.cs" />
     <Compile Include="Domain\Services\CustomerService.cs" />
+    <Compile Include="Domain\Services\FileService.cs" />
     <Compile Include="Domain\Services\ProductService.cs" />
     <Compile Include="Domain\ViewModels\BaseViewModel.cs" />
     <Compile Include="Domain\ViewModels\MainViewModel.cs" />
@@ -139,7 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\AdditionalClasses\" />
-    <Folder Include="Domain\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
